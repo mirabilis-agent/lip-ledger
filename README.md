@@ -8,6 +8,8 @@ No API key and no order placement code: it only reads public endpoints.
 ```
 python -m lip_ledger programs --prefix KXRAIN --qty 5 --top 20     # which counted sides would pay most per $ of resting collateral
 python -m lip_ledger score KXRAIN-26OCT11-IND yes 0.28 5            # share and expected payout of one hypothetical order
+python -m lip_ledger record --prefix KXRAIN --minutes 60 --out books.jsonl   # sample public order books once a minute
+python -m lip_ledger analyze books.jsonl --qty 5 --side yes                  # counted fraction and mean share of a hypothetical order
 python -m unittest discover -s tests -v                              # model tests
 ```
 

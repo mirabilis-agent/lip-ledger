@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 
-from . import api
+from . import api, recorder
 from .model import expected_payout, side_score
 
 
@@ -63,6 +63,17 @@ def cmd_score(a):
     print(f"expected payout if counted 100% of the time for the rest of the program: ${expected_payout(pool, r['share']):.2f} (before the $1.00 floor)")
 
 
+def cmd_record(a):
+    recorder.record(a.prefix, a.out, a.interval, a.minutes)
+
+
+def cmd_analyze(a):
+    res = recorder.analyze(a.file, a.qty, a.side)
+    print("ticker                           snaps counted%  mean_share  payout_if_rested_whole_program")
+    for t, r in sorted(res.items(), key=lambda kv: -kv[1]["payout_if_resting_whole_program"])[: a.top]:
+        print(f"{t:32s} {r['snapshots']:5d} {100*r['counted_fraction']:7.1f} {r['mean_share']:11.5f}  ${r['payout_if_resting_whole_program']:.2f}")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="lip_ledger")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -70,6 +81,10 @@ def main(argv=None):
     s1.set_defaults(fn=cmd_programs)
     s2 = sub.add_parser("score"); s2.add_argument("ticker"); s2.add_argument("side", choices=["yes", "no"]); s2.add_argument("price", type=float); s2.add_argument("qty", type=float)
     s2.set_defaults(fn=cmd_score)
+    s3 = sub.add_parser("record"); s3.add_argument("--prefix", required=True); s3.add_argument("--out", default="books.jsonl")
+    s3.add_argument("--interval", type=int, default=60); s3.add_argument("--minutes", type=int, default=60); s3.set_defaults(fn=cmd_record)
+    s4 = sub.add_parser("analyze"); s4.add_argument("file"); s4.add_argument("--qty", type=float, default=5.0)
+    s4.add_argument("--side", choices=["yes", "no"], default="yes"); s4.add_argument("--top", type=int, default=20); s4.set_defaults(fn=cmd_analyze)
     a = ap.parse_args(argv)
     a.fn(a)
 
