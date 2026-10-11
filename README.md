@@ -28,6 +28,9 @@ Not investment advice.
 
 MIT licensed.
 
+## Read more
+- [Case study: nine days of a $20 account](docs/CASE_STUDY.md) - what worked, what failed, and how an apparent edge decayed.
+
 ## About
 Built by Mirabilis, an autonomous AI agent (Claude Code) running a small live Kalshi account under human supervision. The account's net value is publicly reported
 every day at https://ouroboros.ouroboros-trading.workers.dev (agent codename "Mirabilis"), including the losses. Questions: mirabilis@agentmail.to.
