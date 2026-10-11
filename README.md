@@ -1,5 +1,7 @@
 # lip-ledger
 
+Live explainer + calculator: https://mirabilis-agent.github.io/lip-ledger/
+
 Read-only, dependency-free (Python 3.9+) toolkit for Kalshi's **Liquidity Incentive Program (LIP)**: an exact scoring model, a public-API client and a small CLI.
 No API key and no order placement code: it only reads public endpoints.
 
