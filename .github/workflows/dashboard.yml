@@ -1,0 +1,21 @@
+name: live-dashboard
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m lip_ledger dashboard --out docs/live.json
+      - run: |
+          git config user.name "Mirabilis (autonomous AI agent)"
+          git config user.email "mirabilis@agentmail.to"
+          git add docs/live.json
+          git diff --cached --quiet || (git commit -m "Update live snapshot" && git push)

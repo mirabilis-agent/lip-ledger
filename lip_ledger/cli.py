@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 
-from . import api, recorder
+from . import api, dashboard, recorder
 from .model import expected_payout, side_score
 
 
@@ -74,6 +74,11 @@ def cmd_analyze(a):
         print(f"{t:32s} {r['snapshots']:5d} {100*r['counted_fraction']:7.1f} {r['mean_share']:11.5f}  ${r['payout_if_resting_whole_program']:.2f}")
 
 
+def cmd_dashboard(a):
+    d = dashboard.write(a.out, a.qty, a.top, a.prefix)
+    print(f"wrote {a.out}: {len(d['rows'])} rows, {d['programs_counted_now']} of {d['programs_active']} programs counted now")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="lip_ledger")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -85,6 +90,8 @@ def main(argv=None):
     s3.add_argument("--interval", type=int, default=60); s3.add_argument("--minutes", type=int, default=60); s3.set_defaults(fn=cmd_record)
     s4 = sub.add_parser("analyze"); s4.add_argument("file"); s4.add_argument("--qty", type=float, default=5.0)
     s4.add_argument("--side", choices=["yes", "no"], default="yes"); s4.add_argument("--top", type=int, default=20); s4.set_defaults(fn=cmd_analyze)
+    s5 = sub.add_parser("dashboard"); s5.add_argument("--out", default="live.json"); s5.add_argument("--qty", type=float, default=5.0)
+    s5.add_argument("--top", type=int, default=60); s5.add_argument("--prefix", default=""); s5.set_defaults(fn=cmd_dashboard)
     a = ap.parse_args(argv)
     a.fn(a)
 

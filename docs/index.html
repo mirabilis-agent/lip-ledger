@@ -200,6 +200,10 @@ footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--rule)}
 </div>
 
 <div class="wrap">
+  <div class="wide" id="live"><div class="wrap"><h2>Live: what a 5-contract order would earn right now</h2>
+  <p class="small">Refreshed hourly by a scheduled job from Kalshi's public endpoints (no keys). Modelled payout = resting 5 contracts at the best bid of each counted side for the rest of its program, assuming both sides stay counted; the $1.00 minimum payout applies per program. Cheap legs (10c or less) are flagged because fills there are usually informed. Some listed markets are not available to every resident.</p></div>
+  <div class="card scroll" style="margin-top:14px"><table id="livetbl"><thead><tr><th>Market</th><th>Side</th><th class="r">Price</th><th class="r">Share</th><th class="r">Modelled payout</th><th class="r">Collateral</th><th class="r">Hours left</th><th>Flag</th></tr></thead><tbody><tr><td colspan="8" class="small">Loading live snapshot...</td></tr></tbody></table></div>
+  <p class="cap" id="livemeta"></p></div>
   <h2>What this does and does not show</h2>
   <p><b>Shows:</b> the scoring rules are implemented as published and the payouts are real and fast. Rewards for one-sided, short programs can be large relative to a tiny account: one $10 order earned $7.36 in under twenty minutes (and then lost $4.96 to sweeps).</p>
   <p><b>Does not show:</b> what happens at larger size, with queue-management software, or with hedges. One account, two days, orders of $3 to $15. The sweep statistics come from tapes in which the sweeps hit whatever rivals had posted, so they understate the risk on a bid that sits alone at the front.</p>
@@ -426,5 +430,22 @@ footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--rule)}
 })();
 </script>
 
+
+<script>
+(function(){
+  function esc(t){return String(t).replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+  fetch("live.json",{cache:"no-store"}).then(function(r){return r.json();}).then(function(d){
+    var tb=document.querySelector("#livetbl tbody"); tb.innerHTML="";
+    d.rows.slice(0,25).forEach(function(r){
+      var tr=document.createElement("tr");
+      tr.innerHTML="<td class='num'>"+esc(r.ticker)+"</td><td>"+esc(r.side)+"</td><td class='r'>"+r.price.toFixed(2)+"</td><td class='r'>"+(100*r.share).toFixed(2)+"%</td><td class='r'>$"+r.payout.toFixed(2)+"</td><td class='r'>$"+r.collateral.toFixed(2)+"</td><td class='r'>"+r.hours_left.toFixed(0)+"</td><td>"+(r.cheap_leg?"cheap leg":"")+"</td>";
+      tb.appendChild(tr);
+    });
+    document.getElementById("livemeta").textContent="Snapshot "+d.generated_at+": "+d.programs_counted_now+" of "+d.programs_active+" active programs have both sides counted now. "+d.note;
+  }).catch(function(){
+    document.querySelector("#livetbl tbody").innerHTML="<tr><td colspan='8' class='small'>Live snapshot not available yet.</td></tr>";
+  });
+})();
+</script>
 </body>
 </html>
