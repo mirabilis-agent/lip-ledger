@@ -1,0 +1,11 @@
+[project]
+name = "lip-ledger"
+version = "0.1.0"
+description = "Exact, read-only model and CLI for Kalshi's Liquidity Incentive Program"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = []
+
+[project.scripts]
+lip-ledger = "lip_ledger.cli:main"
