@@ -200,6 +200,13 @@ footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--rule)}
 </div>
 
 <div class="wrap">
+  <div class="wide" id="windex"><div class="wrap"><h2>Live: Kalshi Weather Index behind the hourly temperature markets</h2>
+  <p class="small">The hourly "Directional temperature" markets settle on Kalshi's own minute-level index (mean of 5-8 whole-degree-C ASOS stations, so it moves in steps of 1.8/n F). Refreshed hourly from the public live-data endpoint; research notes in <a href="https://github.com/mirabilis-agent/lip-ledger/blob/main/docs/WEATHER_INDEX.md">WEATHER_INDEX.md</a>.</p>
+  <div class="card scroll" style="margin-top:14px"><table id="wxtbl"><thead><tr><th>City</th><th class="r">Index (F)</th><th class="r">Lattice step</th><th class="r">Receipt latency</th><th>Stations (F)</th><th>Open strikes: strike bid/ask cushion in steps</th></tr></thead><tbody><tr><td colspan="6" class="small">Loading...</td></tr></tbody></table></div>
+  <p class="cap" id="wxmeta"></p></div></div>
+</div>
+
+<div class="wrap">
   <div class="wide" id="live"><div class="wrap"><h2>Live: what a 5-contract order would earn right now</h2>
   <p class="small">Refreshed hourly by a scheduled job from Kalshi's public endpoints (no keys). Modelled payout = resting 5 contracts at the best bid of each counted side for the rest of its program, assuming both sides stay counted; the $1.00 minimum payout applies per program. Cheap legs (10c or less) are flagged because fills there are usually informed. Some listed markets are not available to every resident.</p></div>
   <div class="card scroll" style="margin-top:14px"><table id="livetbl"><thead><tr><th>Market</th><th>Side</th><th class="r">Price</th><th class="r">Share</th><th class="r">Modelled payout</th><th class="r">Collateral</th><th class="r">Hours left</th><th>Flag</th></tr></thead><tbody><tr><td colspan="8" class="small">Loading live snapshot...</td></tr></tbody></table></div>
@@ -444,6 +451,27 @@ footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--rule)}
     document.getElementById("livemeta").textContent="Snapshot "+d.generated_at+": "+d.programs_counted_now+" of "+d.programs_active+" active programs have both sides counted now. "+d.note;
   }).catch(function(){
     document.querySelector("#livetbl tbody").innerHTML="<tr><td colspan='8' class='small'>Live snapshot not available yet.</td></tr>";
+  });
+})();
+</script>
+
+<script>
+(function(){
+  function esc(t){return String(t).replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+  fetch("windex.json",{cache:"no-store"}).then(function(r){return r.json();}).then(function(d){
+    var tb=document.querySelector("#wxtbl tbody"); tb.innerHTML="";
+    d.cities.forEach(function(c){
+      var tr=document.createElement("tr");
+      if(c.error){ tr.innerHTML="<td>"+esc(c.city)+"</td><td colspan='5' class='small'>"+esc(c.error)+"</td>"; tb.appendChild(tr); return; }
+      var st=Object.keys(c.stations).map(function(k){return esc(k.replace("1M",""))+" "+c.stations[k].toFixed(1);}).join(", ");
+      var near=c.strikes.filter(function(s){return Math.abs(s.cushion_ticks)<=3 && s.bid>0.0 || (s.ask<1 && Math.abs(s.cushion_ticks)<=3);}).slice(0,6)
+        .map(function(s){return s.strike.toFixed(2)+" "+s.bid.toFixed(2)+"/"+s.ask.toFixed(2)+" ("+(s.cushion_ticks>0?"+":"")+s.cushion_ticks+")";}).join("; ");
+      tr.innerHTML="<td>"+esc(c.city)+"</td><td class='r'>"+c.index.toFixed(2)+"</td><td class='r'>"+c.tick_f.toFixed(3)+"</td><td class='r'>"+(c.receipt_latency_s?c.receipt_latency_s.join("-")+" s":"")+"</td><td class='small'>"+st+"</td><td class='small'>"+near+"</td>";
+      tb.appendChild(tr);
+    });
+    document.getElementById("wxmeta").textContent="Snapshot "+d.generated_at+".";
+  }).catch(function(){
+    document.querySelector("#wxtbl tbody").innerHTML="<tr><td colspan='6' class='small'>Snapshot not available yet.</td></tr>";
   });
 })();
 </script>

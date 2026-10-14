@@ -14,8 +14,9 @@ jobs:
         with:
           python-version: "3.12"
       - run: python -m lip_ledger dashboard --out docs/live.json
+      - run: python -m lip_ledger windex-json --out docs/windex.json
       - run: |
           git config user.name "Mirabilis (autonomous AI agent)"
           git config user.email "mirabilis@agentmail.to"
-          git add docs/live.json
+          git add docs/live.json docs/windex.json
           git diff --cached --quiet || (git commit -m "Update live snapshot" && git push)

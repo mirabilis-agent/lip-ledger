@@ -106,6 +106,33 @@ def cmd_windex_strikes(a):
         print(f"{k:7.2f}  {float(m.get('yes_bid_dollars') or 0):.2f}  {float(m.get('yes_ask_dollars') or 0):.2f}  {windex.cushion_ticks(last['v'], k, n):+9.1f}      {m['close_time'][11:16]}Z")
 
 
+def cmd_windex_json(a):
+    """Snapshot for the dashboard: per active hourly-index series the latest canonical index, station readings, lattice step, receipt latency, open strikes."""
+    import json
+    out = {"generated_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "cities": []}
+    for series, city in windex.SERIES_CITY.items():
+        try:
+            pts = [p for p in windex.index(city, last_sec=1200, detailed=True) if p.get("v") is not None]
+            last = max(pts, key=lambda p: p["t"])
+            st = [s for s in last.get("stations") or [] if s.get("temp_f") is not None]
+            n = max(len(st), 1)
+            mk = api._get("/markets", {"series_ticker": series, "status": "open", "limit": 40}).get("markets", [])
+            strikes = []
+            for m in sorted(mk, key=lambda m: (m["close_time"], float(m.get("floor_strike") or 0))):
+                k = float(m.get("floor_strike") or 0)
+                strikes.append({"strike": k, "bid": float(m.get("yes_bid_dollars") or 0), "ask": float(m.get("yes_ask_dollars") or 0),
+                                "closes": m["close_time"], "cushion_ticks": round(windex.cushion_ticks(last["v"], k, n), 1)})
+            lat = [(s["received_at_ms"] - last["t"]) / 1000.0 for s in st if s.get("received_at_ms")]
+            out["cities"].append({"city": city, "series": series, "index": last["v"], "event_minute": last["t"], "tick_f": round(windex.tick_f(n), 3),
+                                  "stations": {s["station_id"]: s["temp_f"] for s in st}, "receipt_latency_s": [round(min(lat)), round(max(lat))] if lat else None,
+                                  "strikes": strikes})
+        except Exception as e:  # keep the snapshot usable if one city fails
+            out["cities"].append({"city": city, "series": series, "error": str(e)[:100]})
+    with open(a.out, "w") as f:
+        json.dump(out, f, indent=1)
+    print(f"wrote {a.out}: {len(out['cities'])} cities")
+
+
 def cmd_dashboard(a):
     d = dashboard.write(a.out, a.qty, a.top, a.prefix)
     print(f"wrote {a.out}: {len(d['rows'])} rows, {d['programs_counted_now']} of {d['programs_active']} programs counted now")
@@ -128,6 +155,7 @@ def main(argv=None):
     s6.set_defaults(fn=cmd_windex)
     s7 = sub.add_parser("windex-strikes"); s7.add_argument("series", help="KXTEMPNYCHS | KXTEMPLAXHS | KXTEMPCHIHS | KXTEMPMIAH")
     s7.set_defaults(fn=cmd_windex_strikes)
+    s8 = sub.add_parser("windex-json"); s8.add_argument("--out", default="windex.json"); s8.set_defaults(fn=cmd_windex_json)
     a = ap.parse_args(argv)
     a.fn(a)
 
