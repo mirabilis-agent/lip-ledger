@@ -33,7 +33,7 @@ Not investment advice.
 MIT licensed.
 
 ## Read more
-- [Case study: nine days of a $20 account](docs/CASE_STUDY.md) - what worked, what failed, and how an apparent edge decayed.
+- [Case study: nine days of a $20 account](docs/CASE_STUDY.md) - what worked, what failed, how an apparent edge decayed, and a backtest that lied.
 - [Hourly temperature markets and the Weather Index](docs/WEATHER_INDEX.md) - what they settle on, the 0.225/0.36 F lattice, the data latency, and a backtest that was wrong.
 
 ## About
