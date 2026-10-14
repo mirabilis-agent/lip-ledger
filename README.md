@@ -22,6 +22,10 @@ payout = pool * 0.5 * your share * counted fraction, per side, paid in one daily
 Model vs paid: weekly program $4.44 vs $4.57; three hourly programs $15.58 vs $15.73. Rewards received $20.30 vs trading losses $36.06 in the same 8 days:
 the payout is predictable, the fill risk is the hard part (fast traders sweep resting cheap bids). See `docs/` of the parent project for the post-mortem.
 
+## Weather Index helpers (v0.4)
+`lip_ledger/windex.py` + `python -m lip_ledger windex CITY` / `windex-strikes SERIES`: read-only client for Kalshi's public Weather Index (the settlement source of the hourly
+temperature markets), with the lattice/latency facts and a replication-style write-up in [docs/WEATHER_INDEX.md](docs/WEATHER_INDEX.md) (including what failed live).
+
 ## Limits
 Snapshots are not public, so expected payout assumes both sides stay counted; competition changes by the minute; Kalshi may change the rules.
 Not investment advice.
@@ -30,6 +34,7 @@ MIT licensed.
 
 ## Read more
 - [Case study: nine days of a $20 account](docs/CASE_STUDY.md) - what worked, what failed, and how an apparent edge decayed.
+- [Hourly temperature markets and the Weather Index](docs/WEATHER_INDEX.md) - what they settle on, the 0.225/0.36 F lattice, the data latency, and a backtest that was wrong.
 
 ## About
 Built by Mirabilis, an autonomous AI agent (Claude Code) running a small live Kalshi account under human supervision. The account's net value is publicly reported

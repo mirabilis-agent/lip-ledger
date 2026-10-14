@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 
-from . import api, dashboard, recorder
+from . import api, dashboard, recorder, windex
 from .model import expected_payout, side_score
 
 
@@ -74,6 +74,38 @@ def cmd_analyze(a):
         print(f"{t:32s} {r['snapshots']:5d} {100*r['counted_fraction']:7.1f} {r['mean_share']:11.5f}  ${r['payout_if_resting_whole_program']:.2f}")
 
 
+def cmd_windex(a):
+    pts = windex.index(a.city, last_sec=(a.minutes + 8) * 60, detailed=True)   # newest minutes are still 'incomplete' (readings pending QC)
+    pts.sort(key=lambda p: p["t"])
+    n = max((len(p.get("stations") or []) for p in pts), default=0)
+    print(f"{a.city}: {len(pts)} points, {n} stations, lattice step {windex.tick_f(max(n, 1)):.3f} F")
+    for p in pts[-a.minutes:]:
+        t = dt.datetime.fromtimestamp(p["t"] / 1000, dt.timezone.utc).strftime("%H:%M")
+        st = " ".join(f"{s['station_id'][:4]}={s['temp_f']:.1f}" for s in p.get("stations") or [] if s.get("temp_f") is not None)
+        d = [s["received_at_ms"] - p["t"] for s in p.get("stations") or [] if s.get("received_at_ms")]
+        lat = f"{min(d)/1000:.0f}-{max(d)/1000:.0f}s" if d else "-"
+        v = f"{p['v']:.2f}" if p.get("v") is not None else "pending"
+        print(f"{t} {p['status']:10s} index {v:>8s}  received {lat:>8s}  {st}")
+
+
+def cmd_windex_strikes(a):
+    city = windex.SERIES_CITY.get(a.series)
+    if not city:
+        raise SystemExit("series must be one of " + ", ".join(windex.SERIES_CITY))
+    pts = windex.index(city, last_sec=1200, detailed=True)
+    pts = [p for p in pts if p.get("v") is not None]
+    if not pts:
+        raise SystemExit("no canonical index points yet")
+    last = max(pts, key=lambda p: p["t"])
+    n = max(len(p.get("stations") or []) for p in pts) or 5
+    mk = api._get("/markets", {"series_ticker": a.series, "status": "open", "limit": 40}).get("markets", [])
+    print(f"{city}: latest canonical index {last['v']:.2f} F (event minute {dt.datetime.fromtimestamp(last['t']/1000, dt.timezone.utc):%H:%M}Z), lattice {windex.tick_f(n):.3f} F")
+    print("strike    bid   ask  cushion(ticks)  closes")
+    for m in sorted(mk, key=lambda m: (m["close_time"], float(m.get("floor_strike") or 0))):
+        k = float(m.get("floor_strike") or 0)
+        print(f"{k:7.2f}  {float(m.get('yes_bid_dollars') or 0):.2f}  {float(m.get('yes_ask_dollars') or 0):.2f}  {windex.cushion_ticks(last['v'], k, n):+9.1f}      {m['close_time'][11:16]}Z")
+
+
 def cmd_dashboard(a):
     d = dashboard.write(a.out, a.qty, a.top, a.prefix)
     print(f"wrote {a.out}: {len(d['rows'])} rows, {d['programs_counted_now']} of {d['programs_active']} programs counted now")
@@ -92,6 +124,10 @@ def main(argv=None):
     s4.add_argument("--side", choices=["yes", "no"], default="yes"); s4.add_argument("--top", type=int, default=20); s4.set_defaults(fn=cmd_analyze)
     s5 = sub.add_parser("dashboard"); s5.add_argument("--out", default="live.json"); s5.add_argument("--qty", type=float, default=5.0)
     s5.add_argument("--top", type=int, default=60); s5.add_argument("--prefix", default=""); s5.set_defaults(fn=cmd_dashboard)
+    s6 = sub.add_parser("windex"); s6.add_argument("city", help="nyc | chicago | la-coastal | miami | ..."); s6.add_argument("--minutes", type=int, default=15)
+    s6.set_defaults(fn=cmd_windex)
+    s7 = sub.add_parser("windex-strikes"); s7.add_argument("series", help="KXTEMPNYCHS | KXTEMPLAXHS | KXTEMPCHIHS | KXTEMPMIAH")
+    s7.set_defaults(fn=cmd_windex_strikes)
     a = ap.parse_args(argv)
     a.fn(a)
 
