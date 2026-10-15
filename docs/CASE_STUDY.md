@@ -38,8 +38,8 @@ The live test lost about $2 on day one (one storm system moved four positions th
 ## 4. A third idea, and a backtest that lied (Oct 12-14)
 The hourly temperature markets settle on a public minute-level index ([details](WEATHER_INDEX.md)). A model plus order-book backtest showed +9 cents per contract for
 passive YES sells; live, the first day lost $2.2 on a $3.40 account. The backtest had taken each quote's price from the end-of-minute book (lookahead). Replaying my
-own logged real-time books against the public trade tape (no lookahead) gave a small, heavy-tailed edge that exists only for asks at or below ~65 cents; above that,
-buyers are informed. Rules that came out of it: price band, mid-minute quoting only, a stand-down after each fill, and exposure caps per city-hour.
+own logged real-time books against the public trade tape (no lookahead) gave a small, heavy-tailed edge on the first 99 fills (asks at or below ~65 cents) that vanished with one more day of data (139 fills: -0.001 per contract);
+above ~65 cents buyers are informed. Rules that came out of it: price band, mid-minute quoting only, a stand-down after each fill, and exposure caps per city-hour.
 Net value is now about $0.1; the structural findings (lattice, latency, a 5-9 cent YES premium near the strike) are real but too small, and too exposed to speed, for a $20 account.
 
 Additional lessons: (6) a model of the underlying alone is worse than the market price; use the price as the base and ask what the model adds. (7) Backtests

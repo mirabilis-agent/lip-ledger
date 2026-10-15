@@ -29,7 +29,8 @@ History starts 2026-08-28. Replaying my copy of the history against 4,100 settle
    second feature, gives P(yes) = sigmoid(-0.30 + 0.88 logit(mid) + 0.31 logit(model)) in the last 10 min (log-loss 0.363 vs 0.378 raw mid).
 3. Selling YES passively (post-only ask 1c under the best ask, fee 0) looked like +0.09/contract in a backtest. **That backtest was wrong**: I took the quote price
    from the end-of-minute book (lookahead). A no-lookahead replay of my logged real-time books against the public trade tape gave about +0.05..+0.14 per
-   contract with very heavy tails (one cheap YES sold at 0.25 risks 0.75), positive only for asks at or below ~0.65: above that, buyers are informed (13 fills, NO won once).
+   contract on the first 99 fills, positive only for asks at or below ~0.65 (above that buyers are informed: 13 fills, NO won once). **With one more day of data (139 fills)
+   the replayed edge fell to -0.001 per contract (NO won 64%): indistinguishable from zero, with heavy tails (one cheap YES sold at 0.25 risks 0.75).**
 4. Taking stale bids (IOC) did not work for a slow bot: faster bots remove the best stale bids within ~0.3 s of data arrival; at 1 s latency the leftovers earned
    nothing after the taker fee (4 live fills, all lost).
 5. Live (one $3.40 account, day one): -$2.2. 64 passive fills, -0.018/contract overall; fills 45-70 s after the last arrival (next burst) and fills right after
