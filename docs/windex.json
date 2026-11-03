@@ -1,366 +1,224 @@
 {
- "generated_at": "2026-11-03T14:25:35Z",
+ "generated_at": "2026-11-03T16:00:31Z",
  "cities": [
   {
    "city": "nyc",
    "series": "KXTEMPNYCHS",
-   "index": 57.43,
-   "event_minute": 1793715600000,
+   "index": 63.05,
+   "event_minute": 1793721300000,
    "tick_f": 0.225,
    "stations": {
-    "KCDW1M": 55.4,
-    "KEWR1M": 57.2,
-    "KFRG1M": 60.8,
-    "KHPN1M": 55.4,
-    "KISP1M": 60.8,
-    "KLGA1M": 60.8,
-    "KSMQ1M": 51.8,
-    "KTEB1M": 57.2
+    "KCDW1M": 62.6,
+    "KEWR1M": 62.6,
+    "KFRG1M": 64.4,
+    "KHPN1M": 60.8,
+    "KISP1M": 64.4,
+    "KLGA1M": 62.6,
+    "KSMQ1M": 62.6,
+    "KTEB1M": 64.4
    },
    "receipt_latency_s": [
     139,
-    140
+    142
    ],
-   "strikes": [
-    {
-     "strike": 50.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 28.6
-    },
-    {
-     "strike": 51.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 24.2
-    },
-    {
-     "strike": 52.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 19.7
-    },
-    {
-     "strike": 53.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 15.3
-    },
-    {
-     "strike": 54.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 10.8
-    },
-    {
-     "strike": 55.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 6.4
-    },
-    {
-     "strike": 56.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 2.0
-    },
-    {
-     "strike": 57.99,
-     "bid": 0.98,
-     "ask": 0.99,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -2.5
-    },
-    {
-     "strike": 58.99,
-     "bid": 0.92,
-     "ask": 0.93,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -6.9
-    },
-    {
-     "strike": 59.99,
-     "bid": 0.5,
-     "ask": 0.54,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -11.4
-    }
-   ]
+   "strikes": []
   },
   {
    "city": "la-coastal",
    "series": "KXTEMPLAXHS",
-   "index": 58.28,
-   "event_minute": 1793715600000,
+   "index": 63.32,
+   "event_minute": 1793721300000,
    "tick_f": 0.36,
    "stations": {
-    "KHHR1M": 57.2,
-    "KLAX1M": 60.8,
-    "KLGB1M": 57.2,
-    "KSMO1M": 59,
-    "KSNA1M": 57.2
+    "KHHR1M": 62.6,
+    "KLAX1M": 66.2,
+    "KLGB1M": 60.8,
+    "KSMO1M": 64.4,
+    "KSNA1M": 62.6
    },
    "receipt_latency_s": [
     139,
-    146
+    142
    ],
    "strikes": [
     {
-     "strike": 51.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 17.5
-    },
-    {
-     "strike": 52.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 14.7
-    },
-    {
-     "strike": 53.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 11.9
-    },
-    {
-     "strike": 54.99,
-     "bid": 0.98,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 9.1
-    },
-    {
-     "strike": 55.99,
-     "bid": 0.98,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 6.4
-    },
-    {
-     "strike": 56.99,
-     "bid": 0.97,
-     "ask": 0.99,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 3.6
-    },
-    {
-     "strike": 57.99,
-     "bid": 0.97,
-     "ask": 0.98,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 0.8
-    },
-    {
      "strike": 58.99,
-     "bid": 0.83,
-     "ask": 0.84,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -2.0
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": 12.0
     },
     {
      "strike": 59.99,
-     "bid": 0.05,
-     "ask": 0.08,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -4.8
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": 9.2
     },
     {
      "strike": 60.99,
      "bid": 0.0,
-     "ask": 0.01,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -7.5
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": 6.5
+    },
+    {
+     "strike": 61.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": 3.7
+    },
+    {
+     "strike": 62.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": 0.9
+    },
+    {
+     "strike": 63.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -1.9
+    },
+    {
+     "strike": 64.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -4.6
+    },
+    {
+     "strike": 65.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -7.4
+    },
+    {
+     "strike": 66.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -10.2
+    },
+    {
+     "strike": 67.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -13.0
     }
    ]
   },
   {
    "city": "chicago",
    "series": "KXTEMPCHIHS",
-   "index": 65.41,
-   "event_minute": 1793715600000,
+   "index": 67.64,
+   "event_minute": 1793721300000,
    "tick_f": 0.36,
    "stations": {
-    "KARR1M": 64.4,
-    "KDPA1M": 64.04,
-    "KMDW1M": 66.2,
-    "KORD1M": 66.2,
-    "KPWK1M": 66.2
+    "KARR1M": 66.2,
+    "KDPA1M": 66.2,
+    "KMDW1M": 69.8,
+    "KORD1M": 68,
+    "KPWK1M": 68
    },
    "receipt_latency_s": [
-    -1387,
-    146
+    89,
+    142
    ],
-   "strikes": [
-    {
-     "strike": 59.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 15.1
-    },
-    {
-     "strike": 60.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 12.3
-    },
-    {
-     "strike": 61.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 9.5
-    },
-    {
-     "strike": 62.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 6.7
-    },
-    {
-     "strike": 63.99,
-     "bid": 0.97,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 3.9
-    },
-    {
-     "strike": 64.99,
-     "bid": 0.97,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 1.2
-    },
-    {
-     "strike": 65.99,
-     "bid": 0.75,
-     "ask": 0.81,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -1.6
-    },
-    {
-     "strike": 66.99,
-     "bid": 0.03,
-     "ask": 0.04,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -4.4
-    },
-    {
-     "strike": 67.99,
-     "bid": 0.0,
-     "ask": 0.01,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -7.2
-    },
-    {
-     "strike": 68.99,
-     "bid": 0.0,
-     "ask": 0.01,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -9.9
-    }
-   ]
+   "strikes": []
   },
   {
    "city": "miami",
    "series": "KXTEMPMIAH",
-   "index": 82.76,
-   "event_minute": 1793715600000,
+   "index": 83.48,
+   "event_minute": 1793721300000,
    "tick_f": 0.36,
    "stations": {
-    "KFLL1M": 82.4,
-    "KFXE1M": 82.4,
+    "KFLL1M": 84.2,
+    "KFXE1M": 84.2,
     "KMIA1M": 82.4,
     "KOPF1M": 84.2,
     "KPMP1M": 82.4
    },
    "receipt_latency_s": [
     139,
-    140
+    141
    ],
    "strikes": [
     {
-     "strike": 75.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 18.8
-    },
-    {
-     "strike": 76.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 16.0
-    },
-    {
-     "strike": 77.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 13.3
-    },
-    {
-     "strike": 78.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 10.5
-    },
-    {
-     "strike": 79.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 7.7
-    },
-    {
      "strike": 80.99,
-     "bid": 0.99,
-     "ask": 1.0,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 4.9
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": 6.9
     },
     {
      "strike": 81.99,
-     "bid": 0.97,
-     "ask": 0.99,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": 2.1
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": 4.1
     },
     {
      "strike": 82.99,
-     "bid": 0.92,
-     "ask": 0.93,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -0.6
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": 1.4
     },
     {
      "strike": 83.99,
-     "bid": 0.09,
-     "ask": 0.11,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -3.4
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -1.4
     },
     {
      "strike": 84.99,
      "bid": 0.0,
-     "ask": 0.01,
-     "closes": "2026-11-03T15:00:00Z",
-     "cushion_ticks": -6.2
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -4.2
+    },
+    {
+     "strike": 85.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -7.0
+    },
+    {
+     "strike": 86.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -9.7
+    },
+    {
+     "strike": 87.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -12.5
+    },
+    {
+     "strike": 88.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -15.3
+    },
+    {
+     "strike": 89.99,
+     "bid": 0.0,
+     "ask": 0.0,
+     "closes": "2026-11-03T17:00:00Z",
+     "cushion_ticks": -18.1
     }
    ]
   }
